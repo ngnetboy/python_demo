@@ -1,14 +1,17 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging, datetime
 import logging.handlers
+import signal
 
 
 class TaskScheduler():
     def __init__(self):
         self.data = {}
         logger = logging.getLogger('apscheduler')
-        logging.basicConfig(filename='./schedule.log', level=logging.INFO)
-        loghandler = logging.handlers.RotatingFileHandler('./schedule.log', maxBytes=1024, backupCount=3)
+        logger.setLevel(logging.INFO)
+        log_format = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
+        loghandler = logging.handlers.RotatingFileHandler('./schedule.log', maxBytes=1024 * 1024 * 3, backupCount=3)
+        loghandler.setFormatter(log_format)
         logger.addHandler(loghandler)
 
     def get_scheduler(self, title):
@@ -46,12 +49,27 @@ def interval_task():
     print('I am interval ... ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 def date_task():
-    print('I am interval ... ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+    print('I am date ... ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
 def cron_task():
     print('I am icon ... ' + datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
+flag = 0
+def modify_task(signum, stack):
+    global flag
+    if flag:
+        GLOBAL_TASK.pause('interval_task')
+        GLOBAL_TASK.resume('cron_task')
+        flag = 0
+    else:
+        GLOBAL_TASK.resume('interval_task')
+        GLOBAL_TASK.pause('cron_task')
+        flag = 1
+        
+
 if __name__ == "__main__":
+    signal.signal(signal.SIGUSR1, modify_task)
+
     sched = BackgroundScheduler()
     sched.add_job(interval_task, 'interval', seconds=10)
     GLOBAL_TASK.add('interval_task', sched)
