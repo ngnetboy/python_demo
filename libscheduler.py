@@ -9,7 +9,8 @@ class TaskScheduler():
         self.data = {}
         logger = logging.getLogger('apscheduler')
         logger.setLevel(logging.INFO)
-        log_format = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
+        fmt = "%(asctime)s - %(name)s - %(filename)s[line:%(lineno)d] - %(levelname)s - %(message)s"
+        log_format = logging.Formatter(fmt)
         loghandler = logging.handlers.RotatingFileHandler('./schedule.log', maxBytes=1024 * 1024 * 3, backupCount=3)
         loghandler.setFormatter(log_format)
         logger.addHandler(loghandler)
