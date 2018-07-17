@@ -12,3 +12,5 @@
 5: libpostgresql.py  ---  postgresql 基础的操作
 
 6: libscheduler.py   ---  APScheduler
+
+7: regular_expression.py  ---  正则表达式匹配字符
