@@ -14,3 +14,7 @@
 6: libscheduler.py   ---  APScheduler
 
 7: regular_expression.py  ---  正则表达式匹配字符
+
+8: tornado_server.py  ---  使用tornado进行访问数据库性能测试<环境python3.7>；分别使用同步方式、异步方式、异步数据库pool、uvloop测试。
+
+    测试结果：同步方式：大约100QPS； [异步方式使用默认的asyncio]异步方式：150-250QPS； 异步数据库pool：400-500QPS； uvloop数据库pool：500-600QPS  
