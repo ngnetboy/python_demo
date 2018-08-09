@@ -18,3 +18,5 @@
 8: tornado_server.py  ---  使用tornado进行访问数据库性能测试<环境python3.7>；分别使用同步方式、异步方式、异步数据库pool、uvloop测试。
 
     测试结果：同步方式：大约100QPS； [异步方式使用默认的asyncio]异步方式：150-250QPS； 异步数据库pool：400-500QPS； uvloop数据库pool：500-600QPS  
+
+9: tornado-websocket --- 一个简单的 tornado 的web socket程序
