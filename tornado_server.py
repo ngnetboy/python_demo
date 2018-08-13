@@ -73,6 +73,9 @@ class PoolMsg(RequestHandler):
             #print(dir(conn))
             async with conn.transaction():
                 rows = await conn.fetch("select id, monitor_id, deal_status, target_type, target_name from monitor_msg;")
+        """
+        data = [dict(vlaue) for value in rows]
+        """
         self.finish("ok")
 
 class SyncMsg(RequestHandler):
